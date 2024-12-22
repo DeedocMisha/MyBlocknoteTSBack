@@ -1,13 +1,30 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-@Entity('Table')
-export class Table {
-  @PrimaryGeneratedColumn()
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  Model,
+  Table as SequelizeTable,
+} from 'sequelize-typescript';
+import { Users } from './Users.model';
+@SequelizeTable({ tableName: 'table' })
+export class Table extends Model<Table> {
+  @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
-  @Column()
+  @Column
   title: string;
 
-  @Column({ nullable: false })
+  @Column({ allowNull: false })
   content: string;
+
+  @Column({ type: DataType.DATE, defaultValue: DataType.NOW })
+  timeCreate: Date;
+
+  @ForeignKey(() => Users)
+  @Column({ allowNull: false })
+  userId: number;
+
+  @BelongsTo(() => Users)
+  user: Users;
 }

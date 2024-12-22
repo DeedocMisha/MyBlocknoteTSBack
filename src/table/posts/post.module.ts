@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PostsController } from './post.controller';
 import { PostService } from './post.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Table } from '../Table.model';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Table } from '../../Table.model';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Table])],
+  imports: [SequelizeModule.forFeature([Table])], // Импортируем модель
   controllers: [PostsController],
   providers: [PostService],
 })
